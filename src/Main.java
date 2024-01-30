@@ -1,9 +1,11 @@
-
+/*
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
+
     public static void main(String[] args) {
+
 
         List<Student> students = Arrays.asList(
                 new Student("Math", "Adama", "Smith", "New York", 19),
@@ -14,6 +16,7 @@ public class Main {
                 new Student("Programming", "Kyle", "Miller", "Miami", 20),
                 new Student("English", "Kyle", "Miller", "Miami", 20)
         );
+*/
 /*
         //1. Find Students which age is greater than or equal 20
         List<Student> studentAge = students.stream()
@@ -196,8 +199,10 @@ public class Main {
                 .map(Student::getAge)
                 .distinct().collect(Collectors.toList());
 
-        System.out.println("Distinct List: "+distinct);*/
+        System.out.println("Distinct List: "+distinct);*//*
 
+
+*/
 /*
         //1. Find Students which age is greater than or equal 20
         List<Student> studentAge = students.stream().filter(s -> s.getAge() >= 20).collect(Collectors.toList());
@@ -293,13 +298,17 @@ public class Main {
         System.out.println("peek: "+usePeek);
 
         //use paek() method
-       */
-        /* students.stream()
+       *//*
+
+        */
+/* students.stream()
                 .sorted(Comparator.comparing(Student::getCity))
                 .peek(student -> System.out.println(student.getCity() + ": " +
                         student.getName() + " " + student.getSurname()))
-                .toList();*/
-        /*
+                .toList();*//*
+
+        */
+/*
 
         System.out.println("*************************");
 
@@ -322,9 +331,10 @@ public class Main {
 
         //allMatch()
         boolean allMatch=students.stream().allMatch(value -> value.getAge() == 20);
-        System.out.println("allMatch: "+allMatch);*/
+        System.out.println("allMatch: "+allMatch);*//*
 
-        //allMatch()
+      */
+/*  //allMatch()
         boolean allMatch = students.stream().allMatch(student -> student.getAge()==20);
         System.out.println("allMatch: "+allMatch);
 
@@ -446,6 +456,294 @@ public class Main {
         //1. Find Students which age is greater than or equal 20
         System.out.println();
         List<Student>studentAge=students.stream().filter(s->s.getAge()>=20).toList();
-        System.out.println("Student Age: "+studentAge);
+        System.out.println("Student Age: "+studentAge);*//*
+
+
+
+        //1. Find Students which age is greater than or equal 20
+
+        List<Student>equalAge=students.stream().filter(s->s.getAge()>=20).toList();
+        System.out.println("Equal Age: "+equalAge);
+
+        //2. Sum age of the students
+        System.out.println();
+        int sum_age= students.stream().mapToInt(Student::getAge).sum();
+        System.out.println("Sum Age:"+sum_age);
+
+        //3. Create a list which contains only name
+        System.out.println();
+        List<String>names=students.stream().map(Student::getName).sorted().toList();
+        System.out.println("Names: "+names);
+
+        //4.Find students who have Programming subject
+        System.out.println();
+        Map<String, Long>pSubject=students.stream().filter(s->s.getSubject().startsWith("Programming"))
+                .collect(Collectors.groupingBy(Student::getSubject,Collectors.counting()));
+        System.out.println("Subject: "+pSubject);
+
+        //4.Find students who have Programming subject
+        System.out.println();
+        Map<String, Long>mSubject=students.stream().filter(s->s.getSubject().equals("Math"))
+                .collect(Collectors.groupingBy(Student::getSubject,Collectors.counting()));
+        System.out.println("Subject: "+mSubject);
+
+
+        //5. Group Students by subject
+        System.out.println();
+        Map<String, Long>subjects=students.stream()
+                .collect(Collectors.groupingBy(Student::getSubject, Collectors.counting()));
+        System.out.println("Subjects: "+subjects);
+
+        //6.strings with length less than 5
+        System.out.println();
+        Map<String, Long>length5=students.stream().filter(s->s.getName().length()<5)
+                .collect(Collectors.groupingBy(Student::getName, Collectors.counting()));
+        System.out.println("Length: "+length5);
+
+        //7.Get student with exact match name "John"
+        List<Student>match_name=students.stream().filter(s->s.getName().startsWith("John")).toList();
+        System.out.println("Match Name: "+match_name);
+
+        //8.Get student with matching city "Miami"
+        Map<String, Long>match_city=students.stream().filter(s->s.getCity().equals("Miami"))
+                .collect(Collectors.groupingBy(Student::getCity, Collectors.counting()));
+        System.out.println("Match City: "+match_city);
+
+        //9.Get all student having age numbers 21
+        List<Student>have_age=students.stream().filter(s->s.getAge()==21).toList();
+        System.out.println("Have Age: "+have_age);
+
+        //10.Print all students:
+        System.out.println(students);
+
+        //11.Print all distinct cities:
+        System.out.println();
+        List<String>distinct_cities=students.stream().map(Student::getCity).distinct().toList();
+        System.out.println("Distinct Cities: "+distinct_cities);
+
+        //13.Print the average age of all students:
+        System.out.println();
+        double average_age=students.stream().mapToInt(Student::getAge).average().orElse(0.0);
+        System.out.println("Average: "+average_age);
+
+        //14.Print the count of students for each subject:
+        Map<String, Long>count_student=students.stream()
+                .collect(Collectors.groupingBy(Student::getSubject, Collectors.counting()));
+        System.out.println("Subject Counts: "+count_student);
+
+        //15.Find the youngest student:
+        System.out.println();
+        int youngest_student=students.stream().mapToInt(Student::getAge).min().orElse(0);
+        System.out.println("Youngest_student: "+youngest_student);
+
+        //16.Find the Oldest student:
+        int oldest_student=students.stream().mapToInt(Student::getAge).max().orElse(0);
+        System.out.println("Oldest Students: "+oldest_student);
+
+        //18.sorted date with city
+        List<String>sorted_city=students.stream().map(Student::getCity).sorted().toList();
+        System.out.println("Sorted City: "+sorted_city);
+
+        System.out.println();
+        //use peek() and sorted city method
+        students.stream().limit(2)
+                .sorted(Comparator.comparing(Student::getCity))
+                .peek(student -> System.out.println(student.getCity()+": "+
+                        student.getName()+" "+student.getSurname())).toList();
+
+        System.out.println();
+        students.stream().limit(3)
+                .sorted(Comparator.comparing(Student::getCity))
+                .peek(student -> System.out.println(student.getCity()+": "+
+                        student.getName()+" "+student.getSurname())).toList();
+
+        //20.use limited
+        List<Integer>limit=students.stream().map(Student::getAge).limit(2).toList();
+        System.out.println("Limit: "+limit);
+
+        //21.skip() method
+        List<Integer>skip=students.stream().map(Student::getAge).sorted().skip(2).toList();
+        System.out.println("Skip: "+skip);
+
+        //22.count()
+        Long count=students.stream().count();
+        System.out.println("Counts: "+count);
+
+        //23.allMatch()
+        boolean allMatch=students.stream().allMatch(student -> student.getAge()==2);
+        System.out.println("All Match: "+allMatch);
+
+        System.out.println();
+        List<Student>peek=students.stream().limit(2)
+                .peek(student -> System.out.println(student.getCity()+":"+
+                        student.getName()+" "+ student.getSurname())).toList();
+        System.out.println(peek);
+
+
+    }
+}*/
+
+
+import java.util.*;
+import java.util.stream.*;
+
+class User {
+    String name;
+    List<Order> orders;
+
+    User(String name, List<Order> orders) {
+        this.name = name;
+        this.orders = orders;
+    }
+}
+
+class Order {
+    double value;
+
+    Order(double value) {
+        this.value = value;
+    }
+}
+
+
+class Transaction {
+    String currency;
+    double amount;
+
+    Transaction(String currency, double amount) {
+        this.currency = currency;
+        this.amount = amount;
+    }
+
+    String getCurrency() {
+        return currency;
+    }
+}
+
+class Book {
+    List<String> authors;
+
+    Book(List<String> authors) {
+        this.authors = authors;
+    }
+}
+
+class Person {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    String getName() {
+        return name;
+    }
+
+    int getAge() {
+        return age;
+    }
+}
+
+
+public class Main {
+    public static void main(String[] args) {
+
+        // 1) Advanced Filtering
+        // You have a list of users, each with a list of orders.
+        // Extract the names of users who have placed at least one order with a total value exceeding 1000.
+
+        List<User> users = Arrays.asList(
+                new User("Joy", Arrays.asList(new Order(500), new Order(1500))),
+                new User("Nahid", Arrays.asList(new Order(800), new Order(1200))),
+                new User("Hafiz", Arrays.asList(new Order(200), new Order(300)))
+        );
+
+        List<String> highOrder = users.stream().filter(user -> user.orders.stream().anyMatch(order -> order.value > 1000))
+                .map(user -> user.name).toList();
+        System.out.println("High Orders: " + highOrder);
+
+
+        // 2) Parallel Stream Processing
+        //Given a large list of integers, find the sum of the squares of the even numbers using parallel stream processing.
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+
+        int sumOfEvenSquares = numbers.stream().filter(n -> n % 2 == 0)
+                .mapToInt(n -> n * n).sum();
+        System.out.println("Sum of the Squares: " + sumOfEvenSquares);
+
+
+        // 3) Combining Streams
+        //Merge two lists of strings into a single list, remove duplicates, and then sort them in reverse order.
+        List<String> list1 = Arrays.asList("apple", "banana", "orange");
+        List<String> list2 = Arrays.asList("banana", "grape", "kiwi");
+
+        List<String> remove_duplicates = Stream.concat(list1.stream(), list2.stream())
+                .distinct().sorted(Comparator.reverseOrder()).toList();
+        System.out.println("Removed Duplicates List:" + remove_duplicates);
+
+        // 4) Grouping and Counting
+        //Group a list of transactions by the currency they are in,
+        // and then calculate the total transaction count for each currency.
+
+        List<Transaction> transactions = Arrays.asList(
+                new Transaction("USD", 100),
+                new Transaction("EUR", 200),
+                new Transaction("USD", 150),
+                new Transaction("EUR", 300),
+                new Transaction("USD", 50)
+        );
+
+        Map<String, Long> currency_calculate = transactions.stream()
+                .collect(Collectors.groupingBy(Transaction::getCurrency, Collectors.counting()));
+        System.out.println("Group of currency calculate:" + currency_calculate);
+
+        // 5) FlatMap Challenge
+        //You have a list of books, each with a list of authors.
+        // Create a unique list of all distinct authors from all the books.
+        List<Book> books = Arrays.asList(
+                new Book(Arrays.asList("Author1", "Author2", "Author3")),
+                new Book(Arrays.asList("Author2", "Author3", "Author1")),
+                new Book(Arrays.asList("Author3", "Author4", "Author1"))
+        );
+
+        List<String> distinct_authors = books.stream().flatMap(b -> b.authors.stream())
+                .distinct().toList();
+        System.out.println("Distinct Authors" + distinct_authors);
+
+
+        // 6) Collectors and Custom Collector
+        //Given a list of words, create a custom collector to concatenate them into a single comma-separated string.
+        List<String> words = Arrays.asList("Hello", "world", "this", "is", "a", "custom", "collector");
+
+        List<String> concatenatedString = words.stream().toList();
+        System.out.println("Concatenated String: " + concatenatedString);
+
+
+        // 7) Handling Nulls
+        //Given a list of strings that may contain null values, filter out the nulls, convert to uppercase, and then print them.
+        List<String> nullableStrings = Arrays.asList("One", null, "Two", null, "Three");
+
+        List<String> nullString = nullableStrings.stream().filter(Objects::nonNull)
+                .map(String::toUpperCase)
+                .collect(Collectors.toList());
+        System.out.println("Null String: "+nullString);
+
+
+        // 8) Advanced Reduction
+        //Calculate the product of all even numbers in a list using the reduce operation.
+        List<Integer> numbersList = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+
+        // 9) Custom Comparator
+        //Sort a list of custom
+        // objects based on multiple criteria (e.g., first by age in ascending order, then by name in descending order).
+        List<Person> persons = Arrays.asList(
+                new Person("John", 30),
+                new Person("Alice", 25),
+                new Person("Bob", 30),
+                new Person("Alice", 22)
+        );
     }
 }
